@@ -1,0 +1,55 @@
+{
+    "name": "hiqdev/yii2-x-editable",
+    "type": "yii2-extension",
+    "description": "X-editable extension for Yii2",
+    "keywords": [
+        "x-editable",
+        "widget",
+        "EditableColumn",
+        "extension",
+        "yii2"
+    ],
+    "homepage": "https://hiqdev.com/yii2-x-editable",
+    "license": "BSD-3-Clause",
+    "support": {
+        "email": "support@hiqdev.com",
+        "source": "https://github.com/hiqdev/yii2-x-editable",
+        "issues": "https://github.com/hiqdev/yii2-x-editable/issues",
+        "wiki": "https://github.com/hiqdev/yii2-x-editable/wiki",
+        "forum": "https://forum.hiqdev.com/yii2"
+    },
+    "authors": [
+        {
+            "name": "Andrii Vasyliev",
+            "role": "Project lead",
+            "email": "sol@hiqdev.com",
+            "homepage": "https://hipanel.com/"
+        },
+        {
+            "name": "Dmitry Naumenko",
+            "role": "Lead backend developer",
+            "email": "silverfire@hiqdev.com",
+            "homepage": "http://silverfire.me/"
+        },
+        {
+            "name": "Andrey Klochok",
+            "role": "Lead frontend developer",
+            "email": "tafid@hiqdev.com",
+            "homepage": "https://hiqdev.com/"
+        },
+        {
+            "name": "Yuriy Myronchuk",
+            "role": "QA Lead",
+            "email": "bladeroot@hiqdev.com",
+            "homepage": "https://hiqdev.com/"
+        }
+    ],
+    "require": {
+        "bower-asset/x-editable": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "hiqdev\\xeditable\\": ""
+        }
+    }
+}
