@@ -13,10 +13,10 @@
         "year":         2015
     },
     "vendor": {
-        "name":     "hiqdev",
-        "title":    "HiQDev",
-        "homepage": "https://hiqdev.com/",
-        "email":    "support@hiqdev.com",
+        "name":         "hiqdev",
+        "title":        "HiQDev",
+        "homepage":     "https://hiqdev.com/",
+        "email":        "support@hiqdev.com",
         "authors": {
             "Andrii Vasyliev": {
                 "role":     "Project lead",
