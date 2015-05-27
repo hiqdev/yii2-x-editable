@@ -34,7 +34,7 @@ class XEditableAction extends Action
     public $scenario = '';
 
     /**
-     * @throws traits\NotFoundHttpException
+     * @throws NotFoundHttpException
      */
     public function run()
     {

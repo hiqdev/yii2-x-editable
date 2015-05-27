@@ -1,10 +1,8 @@
 <?php
-
 namespace hiqdev\xeditable\grid;
 
 use hiqdev\xeditable\assets\XEditableAsset;
 use hiqdev\xeditable\traits\XEditableTrait;
-use vova07\select2\Select2Asset;
 use yii\grid\DataColumn;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -14,8 +12,6 @@ use yii\web\View;
 class XEditableColumn extends DataColumn
 {
     use XEditableTrait;
-
-
 
     public function init()
     {

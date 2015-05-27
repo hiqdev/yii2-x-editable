@@ -10,9 +10,6 @@ class XEditableAsset extends AssetBundle
     const FORM_BOOTSTRAP = 'bootstrap';
     const FORM_JQUERY = 'jquery';
     const FORM_JQUERYUI = 'jqueryui';
-
-    const MODE_POPUP = 'popup';
-    const MODE_INLINE = 'inline';
     /**
      * @var string editable form engine: bootstrap, jqueryui, plain
      */
@@ -32,9 +29,9 @@ class XEditableAsset extends AssetBundle
 
     public function registerAssetFiles($view)
     {
-        $replacedForm = preg_replace('/[0-9]+/', '', $this->form);
-        $this->js[] = $this->form . '-editable/js/' . $replacedForm . '-editable' . (YII_DEBUG ? '.js' : '.min.js');
-        $this->css[] = $this->form . '-editable/css/' . $replacedForm . '-editable.css';
+        $withoutDigitFormName = preg_replace('/[0-9]+/', '', $this->form);
+        $this->js[] = $this->form . '-editable/js/' . $withoutDigitFormName . '-editable' . (YII_DEBUG ? '.js' : '.min.js');
+        $this->css[] = $this->form . '-editable/css/' . $withoutDigitFormName . '-editable.css';
 
         parent::registerAssetFiles($view);
     }
