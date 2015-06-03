@@ -14,10 +14,6 @@ class XEditableAsset extends AssetBundle
      * @var string editable form engine: bootstrap, jqueryui, plain
      */
     public $form = self::FORM_BOOTSTRAP3;
-    /**
-     * @var string editable container type: popup or inline
-     */
-    public $mode = self::MODE_POPUP;
 
     public $sourcePath = '@bower/x-editable/dist';
 
