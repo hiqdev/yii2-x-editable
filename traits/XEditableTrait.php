@@ -6,6 +6,7 @@ use vova07\select2\Select2Asset;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\helpers\VarDumper;
+use yii\web\JsExpression;
 use yii\web\NotFoundHttpException;
 use yii\web\View;
 
@@ -21,6 +22,21 @@ trait XEditableTrait
     {
         if (empty($this->pluginOptions['type']))
             $this->pluginOptions['type'] = 'text';
+
+        if (empty($this->pluginOptions['params'])) {
+            if ($this->model) {
+                $pk = array_shift($this->model->primaryKey());
+                $form = $this->model->formName();
+                $this->pluginOptions['params'] = new JsExpression("function(params) {
+                    var result = {};
+                    result['$form'] = {};
+                    result['$form'][params.name] = params.value;
+                    result['$form']['$pk'] = params.pk;
+
+                    return result;
+                }");
+            }
+        }
         $this->view = \Yii::$app->getView();
         $xea = new XEditableAsset();
         if ($this->form)
