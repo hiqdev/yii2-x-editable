@@ -24,7 +24,7 @@ trait XEditableTrait
             $this->pluginOptions['type'] = 'text';
 
         if (empty($this->pluginOptions['params'])) {
-            if ($this->model) {
+            if (isset($this->model)) {
                 $pk = array_shift($this->model->primaryKey());
                 $form = $this->model->formName();
                 $this->pluginOptions['params'] = new JsExpression("function(params) {
@@ -66,6 +66,16 @@ trait XEditableTrait
 
     public function registerClientScript()
     {
+//        $this->view->registerJs(<<<JS
+//            jQuery.fn.editable.defaults.params = function(params) {
+//                var data = {};
+//                data['Host'] = {};
+//                data['Host']['id'] = params.pk;
+//                data['Host']['{$this->attribute}'] = params.value;
+//                return data;
+//            }
+//JS
+//);
         $this->view->registerJs('$(".editable[data-name=' . $this->attribute . ']").editable(' . Json::encode($this->pluginOptions) . ');');
     }
 

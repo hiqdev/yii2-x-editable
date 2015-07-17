@@ -17,7 +17,7 @@ class XEditableColumn extends DataColumn
     {
         parent::init();
         $this->registerAssets();
-        $this->registerClientScript();
+
     }
 
     /**
@@ -30,6 +30,17 @@ class XEditableColumn extends DataColumn
         } else {
             $value = call_user_func($this->value, $model, $index, $this);
         }
+        $this->view->registerJs(<<<JS
+            jQuery.fn.editable.defaults.params = function(params) {
+                var data = {};
+                data['{$model->formName()}'] = {};
+                data['{$model->formName()}']['id'] = params.pk;
+                data['{$model->formName()}']['{$this->attribute}'] = params.value;
+                return data;
+            }
+JS
+        );
+        $this->registerClientScript();
         return Html::a($value, '#', [
             'data-pk' => $model->id,
             'data-name' => $this->attribute,
