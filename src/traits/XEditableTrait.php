@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * X-editable extension for Yii2
+ *
+ * @link      https://github.com/hiqdev/yii2-x-editable
+ * @package   yii2-x-editable
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015, HiQDev (https://hiqdev.com/)
+ */
+
 namespace hiqdev\xeditable\traits;
 
 use hiqdev\xeditable\assets\XEditableAsset;
@@ -20,13 +30,14 @@ trait XEditableTrait
 
     public function registerAssets()
     {
-        if (empty($this->pluginOptions['type']))
+        if (empty($this->pluginOptions['type'])) {
             $this->pluginOptions['type'] = 'text';
+        }
 
         if (empty($this->pluginOptions['params'])) {
             if (isset($this->model)) {
-                $pk = array_shift($this->model->primaryKey());
-                $form = $this->model->formName();
+                $pk                            = array_shift($this->model->primaryKey());
+                $form                          = $this->model->formName();
                 $this->pluginOptions['params'] = new JsExpression("function(params) {
                     var result = {};
                     result['$form'] = {};
@@ -38,9 +49,10 @@ trait XEditableTrait
             }
         }
         $this->view = \Yii::$app->getView();
-        $xea = new XEditableAsset();
-        if ($this->form)
+        $xea        = new XEditableAsset();
+        if ($this->form) {
             $xea->form = $this->form;
+        }
         $xea::register($this->view);
         switch ($this->pluginOptions['type']) {
             case 'select2':
@@ -66,7 +78,7 @@ trait XEditableTrait
 
     public function registerClientScript()
     {
-//        $this->view->registerJs(<<<JS
+        //        $this->view->registerJs(<<<JS
 //            jQuery.fn.editable.defaults.params = function(params) {
 //                var data = {};
 //                data['Host'] = {};
@@ -81,15 +93,17 @@ trait XEditableTrait
 
     /**
      * @param $data
+     *
      * @throws NotFoundHttpException
      */
     public static function saveAction($data)
     {
         $model = ArrayHelper::getValue($data, 'model');
-        $name = ArrayHelper::getValue($data, 'name');
+        $name  = ArrayHelper::getValue($data, 'name');
         $value = ArrayHelper::getValue($data, 'value');
-        if ($model === null)
+        if ($model === null) {
             throw new NotFoundHttpException();
+        }
         if (!is_array($value)) {
             if (strtotime($value)) {
                 $model->$name = strtotime($value);

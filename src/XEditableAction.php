@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * X-editable extension for Yii2
+ *
+ * @link      https://github.com/hiqdev/yii2-x-editable
+ * @package   yii2-x-editable
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015, HiQDev (https://hiqdev.com/)
+ */
+
 /**
  * @inheritdoc
  */
@@ -7,8 +16,6 @@ namespace hiqdev\xeditable;
 
 use hiqdev\xeditable\traits\XEditableTrait;
 use yii\base\Action;
-use yii\console\Response;
-use yii\helpers\VarDumper;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -23,10 +30,9 @@ use yii\web\NotFoundHttpException;
  *           'modelclass' => Model::className(),
  *           ],
  *       ];
- *   }
+ *   }.
  *
  * Class XEditableAction
- * @package hiqdev\xeditable
  */
 class XEditableAction extends Action
 {
@@ -39,16 +45,16 @@ class XEditableAction extends Action
     public function run()
     {
         if (\Yii::$app->request->isAjax) {
-            $pk = $_POST['pk'];
-            $name = $_POST['name'];
-            $value = $_POST['value'];
+            $pk         = $_POST['pk'];
+            $name       = $_POST['name'];
+            $value      = $_POST['value'];
             $modelclass = $this->modelclass;
-            $model = $modelclass::findOne($pk);
+            $model      = $modelclass::findOne($pk);
             if ($this->scenario) {
                 $model->setScenario($this->scenario);
             }
             XEditableTrait::saveAction([
-                'name' => $name,
+                'name'  => $name,
                 'value' => $value,
                 'model' => $model,
             ]);

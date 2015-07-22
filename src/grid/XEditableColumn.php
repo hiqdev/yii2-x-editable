@@ -1,12 +1,20 @@
 <?php
+
+/*
+ * X-editable extension for Yii2
+ *
+ * @link      https://github.com/hiqdev/yii2-x-editable
+ * @package   yii2-x-editable
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015, HiQDev (https://hiqdev.com/)
+ */
+
 namespace hiqdev\xeditable\grid;
 
-use hiqdev\xeditable\assets\XEditableAsset;
 use hiqdev\xeditable\traits\XEditableTrait;
 use yii\grid\DataColumn;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\helpers\Json;
 use yii\web\View;
 
 class XEditableColumn extends DataColumn
@@ -17,7 +25,6 @@ class XEditableColumn extends DataColumn
     {
         parent::init();
         $this->registerAssets();
-
     }
 
     /**
@@ -41,13 +48,14 @@ class XEditableColumn extends DataColumn
 JS
         );
         $this->registerClientScript();
+
         return Html::a($value, '#', [
-            'data-pk' => $model->id,
-            'data-name' => $this->attribute,
+            'data-pk'    => $model->id,
+            'data-name'  => $this->attribute,
             'data-value' => $model->{$this->attribute},
-            'data-url' => $this->pluginOptions['url'] ? : \Yii::$app->urlManager->createUrl($_SERVER['REQUEST_URI']),
-            'data-type' => $this->pluginOptions['type'],
-            'class' => 'editable'
+            'data-url'   => $this->pluginOptions['url'] ?: \Yii::$app->urlManager->createUrl($_SERVER['REQUEST_URI']),
+            'data-type'  => $this->pluginOptions['type'],
+            'class'      => 'editable',
         ]);
     }
 

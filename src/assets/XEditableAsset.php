@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * X-editable extension for Yii2
+ *
+ * @link      https://github.com/hiqdev/yii2-x-editable
+ * @package   yii2-x-editable
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015, HiQDev (https://hiqdev.com/)
+ */
+
 namespace hiqdev\xeditable\assets;
 
 use yii\web\AssetBundle;
@@ -7,9 +16,9 @@ use yii\web\AssetBundle;
 class XEditableAsset extends AssetBundle
 {
     const FORM_BOOTSTRAP3 = 'bootstrap3';
-    const FORM_BOOTSTRAP = 'bootstrap';
-    const FORM_JQUERY = 'jquery';
-    const FORM_JQUERYUI = 'jqueryui';
+    const FORM_BOOTSTRAP  = 'bootstrap';
+    const FORM_JQUERY     = 'jquery';
+    const FORM_JQUERYUI   = 'jqueryui';
     /**
      * @var string editable form engine: bootstrap, jqueryui, plain
      */
@@ -26,8 +35,8 @@ class XEditableAsset extends AssetBundle
     public function registerAssetFiles($view)
     {
         $withoutDigitFormName = preg_replace('/[0-9]+/', '', $this->form);
-        $this->js[] = $this->form . '-editable/js/' . $withoutDigitFormName . '-editable' . (YII_DEBUG ? '.js' : '.min.js');
-        $this->css[] = $this->form . '-editable/css/' . $withoutDigitFormName . '-editable.css';
+        $this->js[]           = $this->form . '-editable/js/' . $withoutDigitFormName . '-editable' . (YII_DEBUG ? '.js' : '.min.js');
+        $this->css[]          = $this->form . '-editable/css/' . $withoutDigitFormName . '-editable.css';
 
         parent::registerAssetFiles($view);
     }

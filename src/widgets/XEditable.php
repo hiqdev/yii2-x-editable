@@ -1,12 +1,20 @@
 <?php
 
+/*
+ * X-editable extension for Yii2
+ *
+ * @link      https://github.com/hiqdev/yii2-x-editable
+ * @package   yii2-x-editable
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015, HiQDev (https://hiqdev.com/)
+ */
+
 namespace hiqdev\xeditable\widgets;
 
 use hiqdev\xeditable\traits\XEditableTrait;
 use yii\base\Widget;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\web\View;
 
 class XEditable extends Widget
 {
@@ -30,12 +38,13 @@ class XEditable extends Widget
     {
         $this->registerClientScript();
         $this->generateParams();
+
         return $this->htmlOptions();
     }
 
     public function htmlOptions()
     {
-        return Html::a($this->value ? : $this->model->{$this->attribute}, '#', $this->params);
+        return Html::a($this->value ?: $this->model->{$this->attribute}, '#', $this->params);
     }
 
     private function generateParams()
@@ -45,20 +54,19 @@ class XEditable extends Widget
         ];
         if ($this->model) {
             $localParams = [
-                'data-type' => $this->pluginOptions['type'],
-                'data-name' => $this->attribute,
-                'data-pk' => $this->model->id,
+                'data-type'  => $this->pluginOptions['type'],
+                'data-name'  => $this->attribute,
+                'data-pk'    => $this->model->id,
                 'data-value' => $this->model->{$this->attribute},
-                'data-title' => $this->model->getAttributeLabel($this->attribute)
+                'data-title' => $this->model->getAttributeLabel($this->attribute),
             ];
         } else {
             $localParams = [
                 'data-type' => $this->pluginOptions['type'],
                 'data-name' => $this->attribute,
-                'data-pk' => $this->id,
+                'data-pk'   => $this->id,
             ];
         }
         $this->params = ArrayHelper::merge($default, $localParams);
     }
 }
-
