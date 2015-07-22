@@ -13,6 +13,7 @@ namespace hiqdev\xeditable\traits;
 
 use hiqdev\xeditable\assets\XEditableAsset;
 use vova07\select2\Select2Asset;
+use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\helpers\VarDumper;
@@ -22,9 +23,17 @@ use yii\web\View;
 
 trait XEditableTrait
 {
-    public $pluginOptions;
+    protected $_view;
 
-    public $view;
+    public function getView()
+    {
+        if ($this->_view === null) {
+            $this->_view = Yii::$app->getView();
+        }
+        return $this->_view;
+    }
+
+    public $pluginOptions;
 
     public $form = null;
 
@@ -48,8 +57,7 @@ trait XEditableTrait
                 }");
             }
         }
-        $this->view = \Yii::$app->getView();
-        $xea        = new XEditableAsset();
+        $xea = new XEditableAsset();
         if ($this->form) {
             $xea->form = $this->form;
         }

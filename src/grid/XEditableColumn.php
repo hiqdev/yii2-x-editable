@@ -12,7 +12,7 @@
 namespace hiqdev\xeditable\grid;
 
 use hiqdev\xeditable\traits\XEditableTrait;
-use yii\grid\DataColumn;
+use hipanel\grid\DataColumn;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\View;
@@ -30,13 +30,9 @@ class XEditableColumn extends DataColumn
     /**
      * @inheritdoc
      */
-    protected function getDataCellContent($model, $key, $index)
+    protected function renderDataCellContent($model, $key, $index)
     {
-        if (empty($this->value)) {
-            $value = ArrayHelper::getValue($model, $this->attribute);
-        } else {
-            $value = call_user_func($this->value, $model, $index, $this);
-        }
+        $value = parent::renderDataCellContent($model, $key, $index);
         $this->view->registerJs(<<<JS
             jQuery.fn.editable.defaults.params = function(params) {
                 var data = {};
@@ -57,13 +53,5 @@ JS
             'data-type'  => $this->pluginOptions['type'],
             'class'      => 'editable',
         ]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function renderDataCellContent($model, $key, $index)
-    {
-        return $this->grid->formatter->format($this->getDataCellContent($model, $key, $index), 'raw');
     }
 }
