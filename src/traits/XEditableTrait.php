@@ -14,15 +14,18 @@ namespace hiqdev\xeditable\traits;
 use hiqdev\xeditable\assets\XEditableAsset;
 use vova07\select2\Select2Asset;
 use Yii;
-use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\helpers\Json;
-use yii\helpers\VarDumper;
-use yii\web\JsExpression;
-use yii\web\NotFoundHttpException;
-use yii\web\View;
 
 trait XEditableTrait
 {
+    public $pluginOptions = [];
+
+    /**
+     * @var string library to be used: bootstrap, jqueryui, plain jquery
+     */
+    public $library;
+
     protected $_view;
 
     public function getView()
@@ -33,98 +36,41 @@ trait XEditableTrait
         return $this->_view;
     }
 
-    public $pluginOptions;
-
-    public $form = null;
-
     public function registerAssets()
     {
-        if (empty($this->pluginOptions['type'])) {
-            $this->pluginOptions['type'] = 'text';
-        }
-
-        if (empty($this->pluginOptions['params'])) {
-            if (isset($this->model)) {
-                $pk                            = array_shift($this->model->primaryKey());
-                $form                          = $this->model->formName();
-                $this->pluginOptions['params'] = new JsExpression("function(params) {
-                    var result = {};
-                    result['$form'] = {};
-                    result['$form'][params.name] = params.value;
-                    result['$form']['$pk'] = params.pk;
-
-                    return result;
-                }");
-            }
-        }
         $xea = new XEditableAsset();
-        if ($this->form) {
-            $xea->form = $this->form;
+        if ($this->library) {
+            $xea->library = $this->library;
         }
         $xea::register($this->view);
-        switch ($this->pluginOptions['type']) {
-            case 'select2':
-                Select2Asset::register($this->view);
-                break;
-            case 'datetime':
-
-                break;
-            case 'date':
-
-                break;
-            case 'typeaheadjs':
-
-                break;
-            case 'combodate':
-
-                break;
-            case 'wysihtml5':
-
-                break;
+        if ($this->pluginOptions['type'] === 'select2') {
+            Select2Asset::register($this->view);
         }
     }
 
-    public function registerClientScript()
+    public function init()
     {
-        //        $this->view->registerJs(<<<JS
-//            jQuery.fn.editable.defaults.params = function(params) {
-//                var data = {};
-//                data['Host'] = {};
-//                data['Host']['id'] = params.pk;
-//                data['Host']['{$this->attribute}'] = params.value;
-//                return data;
-//            }
-//JS
-//);
-        $this->view->registerJs('$(".editable[data-name=' . $this->attribute . ']").editable(' . Json::encode($this->pluginOptions) . ');');
+        parent::init();
+        $this->registerAssets();
     }
 
-    /**
-     * @param $data
-     *
-     * @throws NotFoundHttpException
-     */
-    public static function saveAction($data)
+    public function registerMyJs($data)
     {
-        $model = ArrayHelper::getValue($data, 'model');
-        $name  = ArrayHelper::getValue($data, 'name');
-        $value = ArrayHelper::getValue($data, 'value');
-        if ($model === null) {
-            throw new NotFoundHttpException();
+        if (!$this->pluginOptions['title']) {
+            $this->pluginOptions['title'] = $data['model']->getAttributeLabel($data['attribute']);
         }
-        if (!is_array($value)) {
-            if (strtotime($value)) {
-                $model->$name = strtotime($value);
-            } else {
-                $model->$name = $value;
-            }
-        } else {
-            $model->$name = implode(',', $value);
-        }
-        if ($model->validate()) {
-            $model->update();
-        } else {
-            VarDumper::dump($model->getErrors(), 10);
-        }
+        $this->view->registerJs('$(".editable[data-name=' . $data['attribute'] . ']").editable(' . Json::encode($this->pluginOptions) . ');');
+    }
+
+    public function prepareHtml($data)
+    {
+        $this->registerMyJs($data);
+        $params = [
+            'class'      => 'editable',
+            'data-name'  => $data['attribute'],
+            'data-pk'    => $data['model']->primaryKey,
+            'data-value' => $data['model']->{$data['attribute']},
+        ];
+        return Html::a($data['value'] ?: $data['model']->{$data['attribute']}, '#', $params);
     }
 }
