@@ -33,6 +33,7 @@ trait XEditableTrait
         if ($this->_view === null) {
             $this->_view = Yii::$app->getView();
         }
+
         return $this->_view;
     }
 
@@ -71,6 +72,7 @@ trait XEditableTrait
             'data-pk'    => $data['model']->primaryKey,
             'data-value' => $data['model']->{$data['attribute']},
         ];
+
         return Html::a($data['value'] ?: $data['model']->{$data['attribute']}, '#', $params);
     }
 }

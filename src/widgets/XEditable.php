@@ -33,5 +33,4 @@ class XEditable extends Widget
             'pluginOptions' => $this->pluginOptions,
         ]);
     }
-
 }

@@ -3,6 +3,9 @@ hiqdev/yii2-x-editable commits history
 
 ## 0.1.1 Under development
 
+- Refactored
+    - 0a691c3 2015-07-29 refactored (sol@hiqdev.com)
+    - 603f881 2015-07-22 simplified rendering: used parent::renderDataCellContent (sol@hiqdev.com)
 - Fixed code styling: hideved and php-cs-fixed
     - 3921ed1 2015-07-22 php-cs-fixed (sol@hiqdev.com)
     - f1806fe 2015-07-22 moved to src, rehideved (sol@hiqdev.com)

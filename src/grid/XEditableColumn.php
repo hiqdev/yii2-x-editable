@@ -11,8 +11,8 @@
 
 namespace hiqdev\xeditable\grid;
 
-use hiqdev\xeditable\traits\XEditableTrait;
 use hipanel\grid\DataColumn;
+use hiqdev\xeditable\traits\XEditableTrait;
 
 class XEditableColumn extends DataColumn
 {
