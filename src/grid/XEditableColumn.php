@@ -14,6 +14,10 @@ namespace hiqdev\xeditable\grid;
 use hipanel\grid\DataColumn;
 use hiqdev\xeditable\traits\XEditableTrait;
 
+/**
+ * Class XEditableColumn
+ * @package hiqdev\xeditable\grid
+ */
 class XEditableColumn extends DataColumn
 {
     use XEditableTrait;
@@ -24,7 +28,6 @@ class XEditableColumn extends DataColumn
     protected function renderDataCellContent($model, $key, $index)
     {
         return $this->prepareHtml([
-            'value'         => parent::renderDataCellContent($model, $key, $index),
             'model'         => $model,
             'attribute'     => $this->attribute,
             'pluginOptions' => $this->pluginOptions,

@@ -17,6 +17,10 @@ use Yii;
 use yii\helpers\Html;
 use yii\helpers\Json;
 
+/**
+ * Class XEditableTrait
+ * @package hiqdev\xeditable\traits
+ */
 trait XEditableTrait
 {
     public $pluginOptions = [];
