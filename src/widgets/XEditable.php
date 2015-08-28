@@ -24,6 +24,13 @@ class XEditable extends Widget
 
     public $attribute;
 
+    public function init()
+    {
+        parent::init();
+        $this->registerAssets();
+        $this->pluginOptions['url'] = (isset($this->pluginOptions['url']) && mb_strlen($this->pluginOptions['url']) > 0) ? : $this->model->getScenario();
+    }
+
     public function run()
     {
         return $this->prepareHtml([
