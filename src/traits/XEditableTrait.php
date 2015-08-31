@@ -11,11 +11,13 @@
 
 namespace hiqdev\xeditable\traits;
 
+use hipanel\helpers\ArrayHelper;
 use hiqdev\xeditable\assets\XEditableAsset;
 use vova07\select2\Select2Asset;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Json;
+use yii\helpers\Url;
 
 /**
  * Class XEditableTrait
@@ -64,7 +66,19 @@ trait XEditableTrait
         if (!$this->pluginOptions['title']) {
             $this->pluginOptions['title'] = $data['model']->getAttributeLabel($data['attribute']);
         }
-        $this->view->registerJs('$(".editable[data-name=' . $data['attribute'] . ']").editable(' . Json::encode($this->pluginOptions) . ');');
+        $value = $data['model']->{$data['attribute']};
+        if (is_array($value)) {
+            if (ArrayHelper::isAssociative($value)) {
+                $value = array_keys($value);
+            }
+        } else {
+            $value = [$value];
+        }
+        $this->pluginOptions['value'] = $value;
+        if ($this->pluginOptions['url']) {
+            $this->pluginOptions['url'] = Url::to($this->pluginOptions['url']);
+        }
+        $this->view->registerJs('$(".editable[data-name=' . $data['attribute'] . ']").editable(' . Json::htmlEncode($this->pluginOptions) . ');');
     }
 
     public function prepareHtml($data)
@@ -74,9 +88,9 @@ trait XEditableTrait
             'class'      => 'editable',
             'data-name'  => $data['attribute'],
             'data-pk'    => $data['model']->primaryKey,
-            'data-value' => $data['model']->{$data['attribute']},
+//            'data-value' => $data['model']->{$data['attribute']},
         ];
 
-        return Html::a($data['value'] ?: $data['model']->{$data['attribute']}, '#', $params);
+        return Html::a('', '#', $params);
     }
 }

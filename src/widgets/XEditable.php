@@ -24,11 +24,19 @@ class XEditable extends Widget
 
     public $attribute;
 
+    public $scenario;
+
     public function init()
     {
         parent::init();
         $this->registerAssets();
-        $this->pluginOptions['url'] = (isset($this->pluginOptions['url']) && mb_strlen($this->pluginOptions['url']) > 0) ? : $this->model->getScenario();
+        if ($this->scenario === null) {
+            $this->scenario = $this->model->scenario;
+        }
+        $oldScenario = $this->model->scenario;
+        $this->model->scenario = $this->scenario;
+        $this->pluginOptions['url'] = (isset($this->pluginOptions['url']) && mb_strlen($this->pluginOptions['url'])) ? : $this->model->scenario;
+        $this->model->scenario = $oldScenario;
     }
 
     public function run()
