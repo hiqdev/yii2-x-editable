@@ -12,6 +12,7 @@
 namespace hiqdev\xeditable\widgets;
 
 use hiqdev\xeditable\traits\XEditableTrait;
+use yii\base\Model;
 use yii\base\Widget;
 
 class XEditable extends Widget
@@ -20,10 +21,19 @@ class XEditable extends Widget
 
     public $value;
 
+    /**
+     * @var Model
+     */
     public $model;
 
+    /**
+     * @var string attribute name
+     */
     public $attribute;
 
+    /**
+     * @var string model scenario
+     */
     public $scenario;
 
     public function init()

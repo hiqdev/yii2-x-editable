@@ -45,7 +45,8 @@
         }
     ],
     "require": {
-        "bower-asset/x-editable": "*"
+        "bower-asset/x-editable": "*",
+        "hiqdev/yii2-combo": "*"
     },
     "autoload": {
         "psr-4": {
