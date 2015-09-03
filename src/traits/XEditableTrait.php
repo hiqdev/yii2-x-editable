@@ -25,6 +25,9 @@ use yii\helpers\Url;
  */
 trait XEditableTrait
 {
+    /**
+     * @var array
+     */
     public $pluginOptions = [];
 
     /**
@@ -32,6 +35,9 @@ trait XEditableTrait
      */
     public $library;
 
+    /**
+     * @var
+     */
     protected $_view;
 
     public function getView()
@@ -66,19 +72,32 @@ trait XEditableTrait
         if (!$this->pluginOptions['title']) {
             $this->pluginOptions['title'] = $data['model']->getAttributeLabel($data['attribute']);
         }
-        $value = $data['model']->{$data['attribute']};
-        if (is_array($value)) {
-            if (ArrayHelper::isAssociative($value)) {
-                $value = array_keys($value);
-            }
-        } else {
-            $value = [$value];
-        }
-        $this->pluginOptions['value'] = $value;
+        $this->prepareValue($data);
         if ($this->pluginOptions['url']) {
             $this->pluginOptions['url'] = Url::to($this->pluginOptions['url']);
         }
         $this->view->registerJs('$(".editable[data-name=' . $data['attribute'] . ']").editable(' . Json::htmlEncode($this->pluginOptions) . ');');
+    }
+
+    public function prepareValue($data) {
+        if ($data['value'] !== null) {
+            if ($data['value'] instanceof \Closure) {
+                $value = call_user_func($data['value'], $this);
+            } else {
+                $value = $data['value'];
+            }
+        } else {
+            $value = $data['model']->getAttribute($data['attribute']);
+            if (is_array($value)) {
+                if (ArrayHelper::isAssociative($value)) {
+                    $value = array_keys($value);
+                }
+            } else {
+                $value = [$value];
+            }
+        }
+
+        $this->pluginOptions['value'] = $value;
     }
 
     public function prepareHtml($data)
@@ -88,7 +107,7 @@ trait XEditableTrait
             'class'      => 'editable',
             'data-name'  => $data['attribute'],
             'data-pk'    => $data['model']->primaryKey,
-//            'data-value' => $data['model']->{$data['attribute']},
+            'data-value' => $this->pluginOptions['value'],
         ];
 
         return Html::a('', '#', $params);

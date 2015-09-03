@@ -19,6 +19,9 @@ class XEditable extends Widget
 {
     use XEditableTrait;
 
+    /**
+     * @var
+     */
     public $value;
 
     /**

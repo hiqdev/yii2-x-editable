@@ -9,22 +9,23 @@
         //overriding objects in config (as by default jQuery extend() is not recursive)
         this.options.combo = $.extend({}, Constructor.defaults.combo, options.combo);
 
-        //detect whether it is multi-valued
-        this.isMultiple = this.options.combo.select2Options.multiple;
-        this.hasId = this.options.combo.select2Options.hasId;
+        this.hasId = this.options.combo.hasId;
         this.isRemote = ('ajax' in this.options.combo.select2Options);
+        this.isMultiple = this.options.combo.select2Options.multiple;
 
         //store function that renders text in select2
         this.formatSelection = this.options.combo.select2Options.formatSelection;
         if (typeof(this.formatSelection) !== "function") {
-            this.formatSelection = function (e) { return e.text; };
+            this.formatSelection = function (e) {
+                return e.text;
+            };
         }
     };
 
     $.fn.editableutils.inherit(Constructor, $.fn.editabletypes.abstractinput);
 
     $.extend(Constructor.prototype, {
-        render: function() {
+        render: function () {
             this.setClass();
 
             //can not apply select2 here as it calls initSelection
@@ -33,27 +34,27 @@
             //this.$input.select2(this.options.select2);
 
             //when data is loaded via ajax, we need to know when it's done to populate listData
-            if(this.isRemote) {
+            if (this.isRemote) {
                 //listen to loaded event to populate data
-                this.$input.on('select2-loaded', $.proxy(function(e) {
+                this.$input.on('select2-loaded', $.proxy(function (e) {
                     this.sourceData = e.items.results;
                 }, this));
             }
 
             //trigger resize of editableform to re-position container in multi-valued mode
-            if(this.isMultiple) {
-                this.$input.on('change', function() {
+            if (this.isMultiple) {
+                this.$input.on('change', function () {
                     $(this).closest('form').parent().triggerHandler('resize');
                 });
             }
         },
 
-        value2html: function(value, element) {
+        value2html: function (value, element) {
             var text = '', data,
                 that = this;
 
-            if(this.isMultiple) {
-                if($.isArray(value)) {
+            if (this.isMultiple) {
+                if ($.isArray(value)) {
                     data = value;
                 } else {
                     data = [];
@@ -62,18 +63,18 @@
                     });
                 }
             } else {
-                data = value;
+                data = value[Object.keys(value)[0]];
             }
 
 
             //data may be array (when multiple values allowed)
-            if($.isArray(data)) {
+            if ($.isArray(data)) {
                 //collect selected data and show with separator
                 text = [];
-                $.each(data, function(k, v){
+                $.each(data, function (k, v) {
                     text.push(v && typeof v === 'object' ? that.formatSelection(v) : v);
                 });
-            } else if(data) {
+            } else if (data) {
                 text = that.formatSelection(data);
             }
 
@@ -83,20 +84,34 @@
             Constructor.superclass.value2html.call(this, text, element);
         },
 
-        html2value: function(html) {
+        value2submit: function (value) {
+            var result = [];
+            var that = this;
+            $.each(value, function (k, v) {
+                result.push(that.hasId ? k : v);
+            });
+            return result;
+        },
+
+        html2value: function (html) {
             return this.isMultiple ? this.str2value(html, this.options.viewseparator) : null;
         },
 
-        value2input: function(value) {
-            if(typeof value !== 'string' ) {
+        value2input: function (value) {
+            var that = this;
+            if (typeof value !== 'string') {
                 var newVal = [];
-                $.each(value, function(k, v) {
-                    newVal.push(v);
+                $.each(value, function (k, v) {
+                    if (typeof v !== 'string' && 'text' in v) {
+                        k = v.id;
+                        v = v.text;
+                    }
+                    newVal.push(that.hasId ? k : v);
                 });
                 value = newVal.join(this.getSeparator());
             }
 
-            if(!this.$input.data('select2')) {
+            if (!this.$input.data('select2')) {
                 this.$input.val(value);
                 this.$input.closest('div').combo().register(this.$input, this.options.hash);
             } else {
@@ -106,14 +121,16 @@
             this.idFunc = this.options.combo.select2Options.id;
             if (typeof(this.idFunc) !== "function") {
                 var idKey = this.idFunc || this.$input.data('field').getPk();
-                this.idFunc = function (e) { return e[idKey]; };
+                this.idFunc = function (e) {
+                    return e[idKey];
+                };
             }
 
-            if(this.isRemote && !this.isMultiple && !this.options.combo.select2Options.initSelection) {
+            if (this.isRemote && !this.isMultiple && !this.options.combo.select2Options.initSelection) {
                 var customId = this.options.combo.select2Options.id,
                     customText = this.options.combo.select2Options.formatSelection;
 
-                if(!customId && !customText) {
+                if (!customId && !customText) {
                     var $el = $(this.options.scope);
                     if (!$el.data('editable').isEmpty) {
                         var data = {id: value, text: $el.text()};
@@ -123,24 +140,29 @@
             }
         },
 
-        input2value: function() {
+        input2value: function () {
             var that = this;
             var data = this.$input.data('field').getData();
+            var result = that.hasId ? {} : [];
+            if (data === null) { // if nothing is selected
+                return result;
+            }
             if (!this.isMultiple) {
                 data = [data];
             }
-            var result = [];
-            $.each(data, function (k, v) {
-                if (that.hasId) {
-                    result[v.id] = v.text;
-                } else {
-                    result.push(v.text);
-                }
-            });
+            if (!$.isEmptyObject(data)) {
+                $.each(data, function (k, v) {
+                    if (that.hasId) {
+                        result[v.id] = v;
+                    } else {
+                        result.push(v.text);
+                    }
+                });
+            }
             return result;
         },
 
-        str2value: function(str, separator) {
+        str2value: function (str, separator) {
             if (typeof str !== 'string' || !this.isMultiple) {
                 return str;
             }
@@ -160,7 +182,7 @@
             return val;
         },
 
-        getSeparator: function() {
+        getSeparator: function () {
             return this.options.combo.select2Options.separator || this.options.separator;
         },
 
@@ -168,10 +190,10 @@
          Converts source from x-editable format: {value: 1, text: "1"} to
          select2 format: {id: 1, text: "1"}
          */
-        convertSource: function(source) {
-            if($.isArray(source) && source.length && source[0].value !== undefined) {
-                for(var i = 0; i<source.length; i++) {
-                    if(source[i].value !== undefined) {
+        convertSource: function (source) {
+            if ($.isArray(source) && source.length && source[0].value !== undefined) {
+                for (var i = 0; i < source.length; i++) {
+                    if (source[i].value !== undefined) {
                         source[i].id = source[i].value;
                         delete source[i].value;
                     }
@@ -180,8 +202,8 @@
             return source;
         },
 
-        destroy: function() {
-            if(this.$input.data('select2')) {
+        destroy: function () {
+            if (this.$input.data('select2')) {
                 this.$input.select2('destroy');
             }
         }
@@ -192,7 +214,7 @@
          @property tpl
          @default <input type="hidden">
          **/
-        tpl:'<input type="hidden">',
+        tpl: '<input type="hidden">',
         /**
          Configuration of select2. [Full list of options](http://ivaynberg.github.com/select2).
 
