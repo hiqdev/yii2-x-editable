@@ -74,13 +74,14 @@
                 $.each(data, function (k, v) {
                     text.push(v && typeof v === 'object' ? that.formatSelection(v) : v);
                 });
-            } else if (data) {
+            } else if (typeof data === 'string') {
+                text = data;
+            } else {
                 text = that.formatSelection(data);
             }
 
             text = $.isArray(text) ? text.join(this.options.viewseparator) : text;
 
-            //$(element).text(text);
             Constructor.superclass.value2html.call(this, text, element);
         },
 
