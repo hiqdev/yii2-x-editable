@@ -48,7 +48,7 @@ class XEditable extends Widget
         }
         $oldScenario = $this->model->scenario;
         $this->model->scenario = $this->scenario;
-        $this->pluginOptions['url'] = (isset($this->pluginOptions['url']) && mb_strlen($this->pluginOptions['url'])) ? : $this->model->scenario;
+        $this->pluginOptions['url'] = (isset($this->pluginOptions['url']) && $this->pluginOptions['url']) ? $this->pluginOptions['url'] : $this->model->scenario;
         $this->model->scenario = $oldScenario;
     }
 
