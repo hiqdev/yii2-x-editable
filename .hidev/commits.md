@@ -3,6 +3,15 @@ hiqdev/yii2-x-editable commits history
 
 ## 0.1.1 Under development
 
+- Fixed errors
+    - 1075118 2015-09-18 fixed hidev config (sol@hiqdev.com)
+    - fd374a0 2015-09-18 fixed mistake (sol@hiqdev.com)
+    - 6e089a4 2015-09-03 Fixes (d.naumenko.a@gmail.com)
+- Added ComboXEditable
+    - 3991509 2015-09-02 ComboXEditable implemented (d.naumenko.a@gmail.com)
+    - 8389750 2015-08-31 Some changes (andreyklochok@gmail.com)
+    - 046fd1f 2015-08-28 Add auto detedt url from model scenario (andreyklochok@gmail.com)
+    - 33bace8 2015-08-26 XEditableColumn - removed manual value set (d.naumenko.a@gmail.com)
 - Refactored
     - 0a691c3 2015-07-29 refactored (sol@hiqdev.com)
     - 603f881 2015-07-22 simplified rendering: used parent::renderDataCellContent (sol@hiqdev.com)
