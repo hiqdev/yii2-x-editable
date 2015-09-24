@@ -3,6 +3,7 @@ hiqdev/yii2-x-editable changelog
 
 ## 0.1.1 Under development
 
+- Added formatting with format option
 - Fixed errors
 - Added ComboXEditable
 - Refactored
