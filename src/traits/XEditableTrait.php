@@ -93,6 +93,9 @@ trait XEditableTrait
                     $value = array_keys($value);
                 }
             } else {
+                if ($this->format) {
+                    $value = Yii::$app->formatter->format($value, $this->format);
+                }
                 $value = [$value];
             }
         }
