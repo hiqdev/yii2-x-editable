@@ -3,6 +3,8 @@ hiqdev/yii2-x-editable commits history
 
 ## 0.1.1 Under development
 
+- Added formatting with format option
+    - 6ffa011 2015-09-24 + formatting with format option (sol@hiqdev.com)
 - Fixed errors
     - 1075118 2015-09-18 fixed hidev config (sol@hiqdev.com)
     - fd374a0 2015-09-18 fixed mistake (sol@hiqdev.com)
