@@ -36,28 +36,19 @@ trait XEditableTrait
     public $library;
 
     /**
-     * @var
+     * @var array will be passed to [[Html::a]] method as options
      */
-    protected $_view;
-
-    public function getView()
-    {
-        if ($this->_view === null) {
-            $this->_view = Yii::$app->getView();
-        }
-
-        return $this->_view;
-    }
+    public $linkOptions = [];
 
     public function registerAssets()
     {
-        $xea = new XEditableAsset();
+        $asset = new XEditableAsset();
         if ($this->library) {
-            $xea->library = $this->library;
+            $asset->library = $this->library;
         }
-        $xea::register($this->view);
+        $asset->register(Yii::$app->view);
         if ($this->pluginOptions['type'] === 'select2') {
-            Select2Asset::register($this->view);
+            Select2Asset::register(Yii::$app->view);
         }
     }
 
@@ -72,14 +63,14 @@ trait XEditableTrait
         if (!$this->pluginOptions['title']) {
             $this->pluginOptions['title'] = $data['model']->getAttributeLabel($data['attribute']);
         }
-        $this->prepareValue($data);
         if ($this->pluginOptions['url']) {
             $this->pluginOptions['url'] = Url::to($this->pluginOptions['url']);
         }
-        $this->view->registerJs('$(".editable[data-name=' . $data['attribute'] . ']").editable(' . Json::htmlEncode($this->pluginOptions) . ');');
+        Yii::$app->view->registerJs('$(".editable[data-name=' . $data['attribute'] . ']").editable(' . Json::htmlEncode($this->pluginOptions) . ');');
     }
 
-    public function prepareValue($data) {
+    public function prepareValue($data)
+    {
         if ($data['value'] !== null) {
             if ($data['value'] instanceof \Closure) {
                 $value = call_user_func($data['value'], $this);
@@ -93,9 +84,6 @@ trait XEditableTrait
                     $value = array_keys($value);
                 }
             } else {
-                if ($this->format) {
-                    $value = Yii::$app->formatter->format($value, $this->format);
-                }
                 $value = [$value];
             }
         }
@@ -103,16 +91,50 @@ trait XEditableTrait
         $this->pluginOptions['value'] = $value;
     }
 
+    protected function prepareDataValue($data)
+    {
+        if (isset($this->pluginOptions['data-value'])) {
+            if ($this->pluginOptions['data-value'] instanceof \Closure) {
+                $result = call_user_func($this->pluginOptions['data-value'], $this, $data);
+            } else {
+                $result = $this->pluginOptions['data-value'];
+            }
+        } else {
+            $result = $this->pluginOptions['value'];
+        }
+
+        $this->pluginOptions['data-value'] = $result;
+    }
+
+    protected function prepareDisplayValue($data)
+    {
+        if (isset($this->pluginOptions['data-display-value'])) {
+            if ($this->pluginOptions['data-display-value'] instanceof \Closure) {
+                $result = call_user_func($this->pluginOptions['data-display-value'], $this, $data);
+            } else {
+                $result = $this->pluginOptions['data-display-value'];
+            }
+        } else {
+            $result = $this->pluginOptions['value'];
+        }
+
+        $this->pluginOptions['data-display-value'] = $result;
+    }
+
     public function prepareHtml($data)
     {
+        $this->prepareValue($data);
+        $this->prepareDataValue($data);
+        $this->prepareDisplayValue($data);
         $this->registerMyJs($data);
-        $params = [
-            'class'      => 'editable',
-            'data-name'  => $data['attribute'],
-            'data-pk'    => $data['model']->primaryKey,
-            'data-value' => $this->pluginOptions['value'],
-        ];
 
-        return Html::a('', '#', $params);
+        $params = ArrayHelper::merge([
+            'class' => 'editable',
+            'data-pk' => $data['model']->primaryKey,
+            'data-name' => $data['attribute'],
+            'data-value' => $this->pluginOptions['data-value'],
+        ], $this->linkOptions);
+
+        return Html::a($this->pluginOptions['data-display-value'], '#', $params);
     }
 }
