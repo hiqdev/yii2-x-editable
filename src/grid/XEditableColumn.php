@@ -12,7 +12,9 @@
 namespace hiqdev\xeditable\grid;
 
 use hipanel\grid\DataColumn;
-use hiqdev\xeditable\traits\XEditableTrait;
+use hipanel\helpers\ArrayHelper;
+use hiqdev\xeditable\widgets\XEditable;
+use Yii;
 
 /**
  * Class XEditableColumn
@@ -20,17 +22,26 @@ use hiqdev\xeditable\traits\XEditableTrait;
  */
 class XEditableColumn extends DataColumn
 {
-    use XEditableTrait;
+    /**
+     * @var array options that will be passed to X-Editable widget
+     */
+    public $pluginOptions = [];
+
+    /**
+     * @var array
+     */
+    public $widgetOptions = [];
 
     /**
      * @inheritdoc
      */
     protected function renderDataCellContent($model, $key, $index)
     {
-        return $this->prepareHtml([
-            'model'         => $model,
-            'attribute'     => $this->attribute,
-            'pluginOptions' => $this->pluginOptions,
-        ]);
+        return Yii::createObject(ArrayHelper::merge([
+            'class' => XEditable::className(),
+            'model' => $model,
+            'attribute' => $this->attribute,
+            'pluginOptions' => $this->pluginOptions
+        ], $this->widgetOptions))->run();
     }
 }
