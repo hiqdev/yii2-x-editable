@@ -39,8 +39,6 @@ class XEditable extends Widget
      */
     public $scenario;
 
-    public $format;
-
     public function init()
     {
         parent::init();
