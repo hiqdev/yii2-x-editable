@@ -118,6 +118,10 @@ trait XEditableTrait
             $result = $this->pluginOptions['value'];
         }
 
+        if (is_array($result)) {
+            $result = implode(', ', $result);
+        }
+
         $this->pluginOptions['data-display-value'] = $result;
     }
 
