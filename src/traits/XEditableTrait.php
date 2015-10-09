@@ -119,7 +119,11 @@ trait XEditableTrait
         }
 
         if (is_array($result)) {
-            $result = implode(', ', $result);
+            if ($this->pluginOptions['source']) {
+                $result = ArrayHelper::getValues($this->pluginOptions['source'], $result);
+            }
+
+            $result = implode('<br />', $result);
         }
 
         $this->pluginOptions['data-display-value'] = $result;
