@@ -3,6 +3,12 @@ hiqdev/yii2-x-editable commits history
 
 ## 0.1.1 Under development
 
+    - 9a968cd 2015-10-09 Fixed default displayValue generation. Not sure, whether it works good :) (d.naumenko.a@gmail.com)
+    - 974e1c8 2015-09-28 Default value of data-disaplay-value forced to be a string (d.naumenko.a@gmail.com)
+    - 0d2c03e 2015-09-25 Added RemoteFormat Xeditable (undocumented) (d.naumenko.a@gmail.com)
+    - f6cf4d5 2015-09-25 XEditable widget - removed $format (d.naumenko.a@gmail.com)
+    - 8d11baa 2015-09-25 Trait: added data-display-value, data-value, linkOptions. Minor improvements (d.naumenko.a@gmail.com)
+    - f9f049b 2015-09-25 Column uses widget instead of trait (d.naumenko.a@gmail.com)
 - Added formatting with format option
     - 6ffa011 2015-09-24 + formatting with format option (sol@hiqdev.com)
 - Fixed errors
