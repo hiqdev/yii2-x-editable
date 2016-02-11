@@ -41,7 +41,10 @@ class XEditableColumn extends DataColumn
             'class' => XEditable::className(),
             'model' => $model,
             'attribute' => $this->attribute,
-            'pluginOptions' => $this->pluginOptions
+            'pluginOptions' => $this->pluginOptions,
+            'linkOptions' => [
+                'style' => ['word-break' => 'break-all'],
+            ]
         ], $this->widgetOptions))->run();
     }
 }
