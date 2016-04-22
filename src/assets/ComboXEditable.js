@@ -91,6 +91,11 @@
             $.each(value, function (k, v) {
                 result.push(that.hasId ? k : v);
             });
+
+            if (!this.isMultiple) {
+                result = result[Object.keys(result)[0]];
+            }
+
             return result;
         },
 
