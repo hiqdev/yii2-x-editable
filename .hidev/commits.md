@@ -1,20 +1,26 @@
 hiqdev/yii2-x-editable commits history
 --------------------------------------
 
-## 0.1.1 Under development
+## 0.1.1 2016-04-27
 
+- Added tests and fixed build
+    - 198caa1 2016-04-27 phpcsfixed (sol@hiqdev.com)
+    - 5898986 2016-04-27 added tests (sol@hiqdev.com)
+    - 1b6700a 2016-04-27 rehideved (sol@hiqdev.com)
+- Fixed errors
+    - c4eb91d 2016-04-22 Fixed ComboXEditable.js::value2submit invalid conversion when this.isMultiple is set to false (d.naumenko.a@gmail.com)
+    - b7cbc38 2016-02-11 XeditableColumn added word-break (d.naumenko.a@gmail.com)
     - 9a968cd 2015-10-09 Fixed default displayValue generation. Not sure, whether it works good :) (d.naumenko.a@gmail.com)
     - 974e1c8 2015-09-28 Default value of data-disaplay-value forced to be a string (d.naumenko.a@gmail.com)
     - 0d2c03e 2015-09-25 Added RemoteFormat Xeditable (undocumented) (d.naumenko.a@gmail.com)
     - f6cf4d5 2015-09-25 XEditable widget - removed $format (d.naumenko.a@gmail.com)
     - 8d11baa 2015-09-25 Trait: added data-display-value, data-value, linkOptions. Minor improvements (d.naumenko.a@gmail.com)
     - f9f049b 2015-09-25 Column uses widget instead of trait (d.naumenko.a@gmail.com)
-- Added formatting with format option
-    - 6ffa011 2015-09-24 + formatting with format option (sol@hiqdev.com)
-- Fixed errors
     - 1075118 2015-09-18 fixed hidev config (sol@hiqdev.com)
     - fd374a0 2015-09-18 fixed mistake (sol@hiqdev.com)
     - 6e089a4 2015-09-03 Fixes (d.naumenko.a@gmail.com)
+- Added formatting with format option
+    - 6ffa011 2015-09-24 + formatting with format option (sol@hiqdev.com)
 - Added ComboXEditable
     - 3991509 2015-09-02 ComboXEditable implemented (d.naumenko.a@gmail.com)
     - 8389750 2015-08-31 Some changes (andreyklochok@gmail.com)

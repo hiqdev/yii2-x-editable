@@ -1,10 +1,11 @@
 hiqdev/yii2-x-editable changelog
 --------------------------------
 
-## 0.1.1 Under development
+## 0.1.1 2016-04-27
 
-- Added formatting with format option
+- Added tests and fixed build
 - Fixed errors
+- Added formatting with format option
 - Added ComboXEditable
 - Refactored
 - Fixed code styling: hideved and php-cs-fixed
