@@ -1,6 +1,11 @@
 hiqdev/yii2-x-editable commits history
 --------------------------------------
 
+## 0.1.2 2016-04-27
+
+- Fixed version constraints in `composer.json`
+    - c5e1d0b 2016-04-27 fixed version constraints in `composer.json` (sol@hiqdev.com)
+
 ## 0.1.1 2016-04-27
 
 - Added tests and fixed build
