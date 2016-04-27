@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * X-editable extension for Yii2
+ *
+ * @link      https://github.com/hiqdev/yii2-x-editable
+ * @package   yii2-x-editable
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
+ */
+
 namespace hiqdev\xeditable\widgets;
 
 use hipanel\helpers\ArrayHelper;
@@ -17,7 +26,8 @@ class RemoteFormatXEditable extends XEditable
         ], $this->pluginOptions);
     }
 
-    public function registerAssets() {
+    public function registerAssets()
+    {
         parent::registerAssets();
         RemoteFormatXEditableAsset::register(Yii::$app->view);
     }

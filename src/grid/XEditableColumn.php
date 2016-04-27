@@ -6,7 +6,7 @@
  * @link      https://github.com/hiqdev/yii2-x-editable
  * @package   yii2-x-editable
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2015, HiQDev (https://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2016, HiQDev (http://hiqdev.com/)
  */
 
 namespace hiqdev\xeditable\grid;
@@ -17,8 +17,7 @@ use hiqdev\xeditable\widgets\XEditable;
 use Yii;
 
 /**
- * Class XEditableColumn
- * @package hiqdev\xeditable\grid
+ * Class XEditableColumn.
  */
 class XEditableColumn extends DataColumn
 {
@@ -33,7 +32,7 @@ class XEditableColumn extends DataColumn
     public $widgetOptions = [];
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function renderDataCellContent($model, $key, $index)
     {
@@ -44,7 +43,7 @@ class XEditableColumn extends DataColumn
             'pluginOptions' => $this->pluginOptions,
             'linkOptions' => [
                 'style' => ['word-break' => 'break-all'],
-            ]
+            ],
         ], $this->widgetOptions))->run();
     }
 }
