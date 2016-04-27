@@ -1,13 +1,8 @@
 package:
-    name:           yii2-x-editable
-    namespace:      hiqdev\xeditable
-    label:          XEditableExtension
-    title:          X-editable extension for Yii2
     type:           yii2-extension
+    name:           yii2-x-editable
+    title:          X-editable extension for Yii2
+    headline:       Yii2 XEditable
     keywords:       x-editable, widget, editable column, extension, yii2
-    description:    X-editable extension for Yii2 with widget, XEditableColumn and so on
-    year:           2015
-
-require:
-    hiqdev/hidev-config:        "*"
-    hiqdev/hidev-config-php:    "*"
+    namespace:      hiqdev\xeditable
+    description:    X-editable extension for Yii2 with widget, XEditableColumn and more
