@@ -65,7 +65,7 @@ trait XEditableTrait
         if ($this->pluginOptions['url']) {
             $this->pluginOptions['url'] = Url::to($this->pluginOptions['url']);
         }
-        Yii::$app->view->registerJs('$(".editable[data-name=' . $data['attribute'] . ']").editable(' . Json::htmlEncode($this->pluginOptions) . ');');
+        Yii::$app->view->registerJs("$('#{$this->getId()}').editable(" . Json::htmlEncode($this->pluginOptions) . ");");
     }
 
     public function prepareValue($data)
@@ -136,6 +136,7 @@ trait XEditableTrait
         $this->registerMyJs($data);
 
         $params = ArrayHelper::merge([
+            'id' => $this->getId(),
             'class' => 'editable',
             'data-pk' => $data['model']->primaryKey,
             'data-name' => $data['attribute'],
