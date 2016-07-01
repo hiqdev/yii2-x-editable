@@ -62,5 +62,11 @@
             "type": "composer",
             "url": "https://asset-packagist.hiqdev.com"
         }
-    ]
+    ],
+    "extra": {
+        "config-plugin": {
+            "hisite": "src/config/hisite.php",
+            "hidev": "src/config/hidev.php"
+        }
+    }
 }
