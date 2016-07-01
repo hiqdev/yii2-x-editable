@@ -4,9 +4,12 @@ return [
     'components' => [
         'i18n' => [
             'translations' => [
-                'x-editable' => [
+                'xeditable' => [
                     'class' => \yii\i18n\PhpMessageSource::class,
-                    'basePath' => '@hiqdev/xeditable',
+                    'basePath' => '@hiqdev/xeditable/messages',
+                    'fileMap' => [
+                        'xeditable' => 'xeditable.php',
+                    ],
                 ],
             ],
         ],
