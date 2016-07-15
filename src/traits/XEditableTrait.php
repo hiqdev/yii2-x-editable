@@ -65,10 +65,8 @@ trait XEditableTrait
         if ($this->pluginOptions['url']) {
             $this->pluginOptions['url'] = Url::to($this->pluginOptions['url']);
         }
-        if (!$this->pluginOptions['emptytext']) {
-            $this->pluginOptions['emptytext'] = Yii::t('xeditable', 'Empty');
-        }
-        Yii::$app->view->registerJs("$('#{$this->getId()}').editable(" . Json::htmlEncode($this->pluginOptions) . ");");
+        $selector = ArrayHelper::remove($this->pluginOptions, 'selector', '.editable[data-name=' . $data['attribute'] . ']');
+        Yii::$app->view->registerJs('$("' . $selector . '").editable(' . Json::htmlEncode($this->pluginOptions) . ');');
     }
 
     public function prepareValue($data)
