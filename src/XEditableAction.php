@@ -27,7 +27,7 @@ use yii\web\NotFoundHttpException;
  *           'editable' => [
  *           'class' => 'hiqdev\xeditable\XEditableAction',
  *           //'scenario'=>'editable',  //optional
- *           'modelclass' => Model::className(),
+ *           'modelclass' => Model::class,
  *           ],
  *       ];
  *   }.

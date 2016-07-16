@@ -37,7 +37,7 @@ class XEditableColumn extends DataColumn
     protected function renderDataCellContent($model, $key, $index)
     {
         return Yii::createObject(ArrayHelper::merge([
-            'class' => XEditable::className(),
+            'class' => XEditable::class,
             'model' => $model,
             'attribute' => $this->attribute,
             'pluginOptions' => $this->pluginOptions,
