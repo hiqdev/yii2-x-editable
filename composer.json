@@ -46,7 +46,7 @@
     ],
     "require": {
         "bower-asset/x-editable": "<2.0",
-        "hiqdev/yii2-combo": "<2.0"
+        "hiqdev/yii2-combo": "<2.0 || dev-master"
     },
     "require-dev": {
         "hiqdev/hidev-php": "<2.0",
