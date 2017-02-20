@@ -11,10 +11,10 @@
 
 namespace hiqdev\xeditable\grid;
 
-use hipanel\grid\DataColumn;
-use hipanel\helpers\ArrayHelper;
+use hiqdev\higrid\DataColumn;
 use hiqdev\xeditable\widgets\XEditable;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class XEditableColumn.
