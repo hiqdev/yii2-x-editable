@@ -11,9 +11,14 @@
         value2html: function (value, element) {
             var options;
             var self = this;
+
             var callback = function (text, element) {
                 Constructor.superclass.value2html.call(self, text, element);
             };
+
+            if (typeof value !== 'string') {
+                return callback('', element);
+            }
 
             options = $.extend(true, {}, this.options.ajaxOptions);
             options['data'] = typeof options['data'] === 'function' ? options.data.call(this, value, element) : options['data'];
