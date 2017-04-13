@@ -1,6 +1,6 @@
 <?php
 /**
- * X-editable extension for Yii2
+ * X-editable extension for Yii2.
  *
  * @link      https://github.com/hiqdev/yii2-x-editable
  * @package   yii2-x-editable
