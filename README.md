@@ -1,5 +1,4 @@
-Yii2 XEditable
-==============
+# Yii2 XEditable
 
 **X-editable extension for Yii2**
 
