@@ -60,8 +60,7 @@
     },
     "extra": {
         "config-plugin": {
-            "web": "src/config/web.php",
-            "hidev": "src/config/hidev.php"
+            "web": "src/config/web.php"
         }
     },
     "repositories": [
