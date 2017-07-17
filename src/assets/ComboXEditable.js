@@ -26,8 +26,6 @@
 
     $.extend(Constructor.prototype, {
         render: function () {
-            console.log('render');
-
             if (!this.$input.data('select2')) {
                 this.$input.closest('div').combo().register(this.$input, this.options.hash);
             }
@@ -46,12 +44,10 @@
         },
 
         value2html: function (value, element) {
-            console.log('value2html', arguments);
             Constructor.superclass.value2html.apply(this, arguments);
         },
 
         renderList: function() {
-            console.log('renderList', arguments);
             var $options = this.$input.children();
             Constructor.superclass.renderList.apply(this, arguments);
             this.$input.prepend($options);
@@ -65,7 +61,6 @@
         },
 
         html2value: function (html) {
-          console.log('html2value', html, this.isMultiple);
           if (!this.isMultiple) {
               return html;
           }
@@ -74,14 +69,12 @@
         },
 
         value2input: function (value) {
-            console.log('value2input', value)
 
             // The value for a multiple select can be passed in as a single string
             // This will convert it from a string to an array of data values
             if (value && !$.isArray(value) && this.isMultiple) {
                 value = this.str2value(value);
 
-                console.log('value2input', value, 'fixed');
             }
 
             if (!value) {
@@ -127,8 +120,6 @@
         },
 
         str2value: function (str) {
-            console.log('str2value', str);
-
             if ($.isArray(str)) {
                 return str;
             }
@@ -213,8 +204,6 @@
             if (!data && this.$input && this.$input.data('select2')) {
                 data = this.$input.select2('data');
             }
-
-            console.log('makeArray', data);
 
             if ($.isArray(data)) {
                 for (var i = 0; i < data.length; i++) {
