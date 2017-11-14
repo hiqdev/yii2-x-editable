@@ -8,6 +8,7 @@
 
         //overriding objects in config (as by default jQuery extend() is not recursive)
         this.options.combo = $.extend({}, Constructor.defaults.combo, options.combo);
+        this.options.source = [];
 
         this.hasId = this.options.combo.hasId;
         this.isRemote = ('ajax' in this.options.combo.select2Options);
@@ -26,6 +27,7 @@
 
     $.extend(Constructor.prototype, {
         render: function () {
+            debugger;
             if (!this.$input.data('select2')) {
                 this.$input.closest('div').combo().register(this.$input, this.options.hash);
             }
