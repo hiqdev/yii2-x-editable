@@ -1,6 +1,6 @@
 <?php
 /**
- * X-editable extension for Yii2.
+ * X-editable extension for Yii2
  *
  * @link      https://github.com/hiqdev/yii2-x-editable
  * @package   yii2-x-editable
@@ -21,8 +21,8 @@ foreach ([
     foreach ([$old => $new, $new => $old] as $one => $other) {
         if (!class_exists($one) && class_exists($other)) {
             $pos = strrpos($one, '\\');
-            $class = $pos === FALSE ? $one : substr($one, $pos+1);
-            $space = $pos === FALSE ? '' : substr($one, 0, $pos);
+            $class = $pos === false ? $one : substr($one, $pos+1);
+            $space = $pos === false ? '' : substr($one, 0, $pos);
             $namespace = $space ? "namespace $space;" : '';
             eval("${namespace}abstract class $class extends \\$other {};\n");
         }
