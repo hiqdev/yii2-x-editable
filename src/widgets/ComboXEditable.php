@@ -26,7 +26,7 @@ class ComboXEditable extends XEditable
     {
         parent::init();
 
-        if (!($this->combo instanceof Combo)) {
+        if (!$this->combo instanceof Combo) {
             $this->combo = ArrayHelper::merge([
                 'model' => $this->model,
                 'attribute' => $this->attribute,

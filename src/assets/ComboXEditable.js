@@ -27,7 +27,6 @@
 
     $.extend(Constructor.prototype, {
         render: function () {
-            debugger;
             if (!this.$input.data('select2')) {
                 this.$input.closest('div').combo().register(this.$input, this.options.hash);
             }
@@ -143,7 +142,11 @@
             // We have to special case multiple selects, which aren't supported
             // by default.
             var results = [], items;
-            this.sourceData = this.$input.data('field').getData();
+            try {
+                this.sourceData = this.$input.data('field').getData();
+            } catch (exception) {
+                this.sourceData = [];
+            }
 
             if (!$.isArray(value)) {
                 items = $.fn.editableutils.itemsByValue(value, this.sourceData, 'id');
