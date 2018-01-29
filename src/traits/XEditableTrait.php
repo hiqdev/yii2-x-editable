@@ -64,7 +64,7 @@ trait XEditableTrait
         if ($this->pluginOptions['url']) {
             $this->pluginOptions['url'] = Url::to($this->pluginOptions['url']);
         }
-        $selector = ArrayHelper::remove($this->pluginOptions, 'selector', '.editable[data-name=' . $data['attribute'] . ']');
+        $selector = ArrayHelper::remove($this->pluginOptions, 'selector', '.editable[data-pk=' . $this->model->id . ']');
         Yii::$app->view->registerJs('$("' . $selector . '").editable(' . Json::htmlEncode($this->pluginOptions) . ');');
     }
 
@@ -72,7 +72,7 @@ trait XEditableTrait
     {
         if ($data['value'] !== null) {
             if ($data['value'] instanceof \Closure) {
-                $value = call_user_func($data['value'], $this);
+                $value = call_user_func($data['value'], $this->model, $this);
             } else {
                 $value = $data['value'];
             }

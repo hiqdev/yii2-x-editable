@@ -38,6 +38,7 @@ class XEditableColumn extends DataColumn
         return Yii::createObject(ArrayHelper::merge([
             'class' => XEditable::class,
             'model' => $model,
+            'value' => $this->value,
             'attribute' => $this->attribute,
             'pluginOptions' => $this->pluginOptions,
             'linkOptions' => [
