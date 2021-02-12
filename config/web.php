@@ -14,7 +14,7 @@ return [
             'translations' => [
                 'xeditable' => [
                     'class' => \yii\i18n\PhpMessageSource::class,
-                    'basePath' => '@hiqdev/xeditable/messages',
+                    'basePath' => dirname(__DIR__) . '/src/messages',
                     'fileMap' => [
                         'xeditable' => 'xeditable.php',
                     ],
