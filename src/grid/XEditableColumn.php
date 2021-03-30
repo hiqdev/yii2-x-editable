@@ -40,7 +40,7 @@ class XEditableColumn extends DataColumn
             'model' => $model,
             'value' => $this->value,
             'attribute' => $this->attribute,
-            'pluginOptions' => array_merge($this->pluginOptions, ['selector' => ".editable[data-pk={$key}]"]),
+            'pluginOptions' => array_merge($this->pluginOptions, ['selector' => ".editable[data-pk={$key}][data-name={$this->attribute}]"]),
             'linkOptions' => [
                 'style' => ['word-break' => 'break-all'],
             ],
