@@ -45,7 +45,7 @@ trait XEditableTrait
             $asset->library = $this->library;
         }
         $asset->register(Yii::$app->view);
-        if ($this->pluginOptions['type'] === 'select2') {
+        if (isset($this->pluginOptions['type']) && $this->pluginOptions['type'] === 'select2') {
             Select2Asset::register(Yii::$app->view);
         }
     }
@@ -58,7 +58,7 @@ trait XEditableTrait
 
     public function registerMyJs($data)
     {
-        if (!$this->pluginOptions['title']) {
+        if (empty($this->pluginOptions['title'])) {
             $this->pluginOptions['title'] = $data['model']->getAttributeLabel($data['attribute']);
         }
         if ($this->pluginOptions['url']) {
@@ -118,7 +118,7 @@ trait XEditableTrait
         }
 
         if (is_array($result)) {
-            if ($this->pluginOptions['source']) {
+            if (!empty($this->pluginOptions['source'])) {
                 $result = ArrayHelper::getValues($this->pluginOptions['source'], $result);
             }
 
