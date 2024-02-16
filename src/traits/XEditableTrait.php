@@ -141,6 +141,7 @@ trait XEditableTrait
             'data-pk' => $data['model']->primaryKey,
             'data-name' => $data['attribute'],
             'data-value' => $this->pluginOptions['data-value'],
+            'title' => $this->model->getAttributeLabel($data['attribute']),
         ], $this->linkOptions);
 
         return Html::a($this->pluginOptions['data-display-value'], '#', $params);
