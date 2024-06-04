@@ -64,8 +64,14 @@ trait XEditableTrait
         if ($this->pluginOptions['url']) {
             $this->pluginOptions['url'] = Url::to($this->pluginOptions['url']);
         }
-        $selector = ArrayHelper::remove($this->pluginOptions, 'selector', ".editable[data-pk={$data['model']->primaryKey}][data-name={$data['attribute']}]");
-        Yii::$app->view->registerJs('$("' . $selector . '").editable(' . Json::htmlEncode($this->pluginOptions) . ');');
+        if ($data['model']->primaryKey) {
+            $selector = ArrayHelper::remove(
+                $this->pluginOptions,
+                'selector',
+                ".editable[data-pk={$data['model']->primaryKey}][data-name={$data['attribute']}]",
+            );
+            Yii::$app->view->registerJs('$("' . $selector . '").editable(' . Json::htmlEncode($this->pluginOptions) . ');');
+        }
     }
 
     public function prepareValue($data)
