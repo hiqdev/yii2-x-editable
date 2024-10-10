@@ -58,20 +58,52 @@ trait XEditableTrait
 
     public function registerMyJs($data)
     {
+        $this->setEditableTitle($data);
+        $this->setEditableUrl();
+
+        $primaryKey = $this->getPrimaryKey($data);
+        if ($primaryKey) {
+            $this->registerEditableSelector($primaryKey, $data['attribute']);
+        }
+    }
+
+    private function setEditableTitle($data)
+    {
         if (empty($this->pluginOptions['title'])) {
             $this->pluginOptions['title'] = $data['model']->getAttributeLabel($data['attribute']);
         }
-        if ($this->pluginOptions['url']) {
+    }
+
+    private function setEditableUrl()
+    {
+        if (!empty($this->pluginOptions['url'])) {
             $this->pluginOptions['url'] = Url::to($this->pluginOptions['url']);
         }
-        if ($data['model']->primaryKey) {
-            $selector = ArrayHelper::remove(
-                $this->pluginOptions,
-                'selector',
-                ".editable[data-pk={$data['model']->primaryKey}][data-name={$data['attribute']}]",
-            );
-            Yii::$app->view->registerJs('$("' . $selector . '").editable(' . Json::htmlEncode($this->pluginOptions) . ');');
-        }
+    }
+
+    private function getPrimaryKey($data)
+    {
+        return $this->pluginOptions['data-pk'] ?? $data['model']->primaryKey;
+    }
+
+    private function registerEditableSelector($primaryKey, $attribute)
+    {
+        $selector = $this->getEditableSelector($primaryKey, $attribute);
+        $jsCode = sprintf(
+            '$("%s").editable(%s);',
+            $selector,
+            Json::htmlEncode($this->pluginOptions)
+        );
+        Yii::$app->view->registerJs($jsCode);
+    }
+
+    private function getEditableSelector($primaryKey, $attribute)
+    {
+        return ArrayHelper::remove(
+            $this->pluginOptions,
+            'selector',
+            ".editable[data-pk={$primaryKey}][data-name={$attribute}]"
+        );
     }
 
     public function prepareValue($data)
@@ -144,7 +176,7 @@ trait XEditableTrait
         $params = ArrayHelper::merge([
             'id' => $this->getId(),
             'class' => 'editable',
-            'data-pk' => $data['model']->primaryKey,
+            'data-pk' => $this->getPrimaryKey($data),
             'data-name' => $data['attribute'],
             'data-value' => $this->pluginOptions['data-value'],
             'title' => $this->model->getAttributeLabel($data['attribute']),
